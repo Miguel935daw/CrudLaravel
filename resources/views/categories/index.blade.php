@@ -32,34 +32,45 @@
                     </div>
 
                     <div class="col-md-3 d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-{{$category->id}}">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete" categoryid="{{$category->id}}">
                             Eliminar
                           </button>
                     </div>
                 </div>
-                <div class="modal fade" id="modal-{{$category->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">¿Quieres eliminar la categoría?</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Junto con ella se eliminaran las tareas que pertenezcan a la misma
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <form action="{{ route('categorias-destroy', ['category' => $category->id]) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                          </form>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
             @endforeach
+            <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Quieres eliminar la categoría?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      Junto con ella se eliminaran las tareas que pertenezcan a la misma
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <form action="{{ route('categorias-destroy', ['category' => 'categoryid']) }}" method="POST" id="modalForm">
+                      @method('DELETE')
+                      @csrf
+                      <input type="hidden" name="category_id" id="category-id-input">
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script>
+              var hiddenInput = document.getElementById('category-id-input')
+              var modal = document.getElementById('modalForm')
+              document.querySelectorAll('[categoryid]').forEach(element => {
+                element.addEventListener('click',($element)=>{
+                  hiddenInput.value = element.getAttribute("categoryid")
+                  modal.action = modal.action.replace("categoryid", hiddenInput.value)
+                })
+              });
+            </script>
         </div>
     </div>
 @endsection
