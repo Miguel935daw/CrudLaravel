@@ -50,7 +50,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <form action="{{ route('categorias-destroy', ['category' => 'categoryid']) }}" method="POST" id="modalForm">
+                    <form action="{{ route('categorias-destroy') }}" method="POST" id="modalForm">
                       @method('DELETE')
                       @csrf
                       <input type="hidden" name="category_id" id="category-id-input">
@@ -67,7 +67,6 @@
               document.querySelectorAll('[categoryid]').forEach(element => {
                 element.addEventListener('click',($element)=>{
                   hiddenInput.value = element.getAttribute("categoryid")
-                  modal.action = modal.action.replace("categoryid", hiddenInput.value)
                 })
               });
             </script>

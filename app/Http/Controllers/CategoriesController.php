@@ -102,11 +102,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $category){
-        if (!Category::where('id', $category)->exists()) {
+    public function destroy(){
+        if (!Category::where('id', $_POST['category_id'])->exists()) {
             throw ValidationException::withMessages(['name' => 'La categoría con ese id no existe']);
         }
-        $category = Category::find($category);
+        $category = Category::find($_POST['category_id']);
         $category->todos()->each(function($todo){
             $todo->delete();
         });

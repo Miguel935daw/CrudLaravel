@@ -34,4 +34,4 @@ Route::resource('categories', CategoriesController::class);
 
 Route::get('categories/{category}', [CategoriesController::class, 'show'])->name('categorias-show');
 Route::patch('categories/{category}', [CategoriesController::class, 'update'])->name('categorias-update');
-Route::delete('categories/{category}', [CategoriesController::class, 'destroy'])->name('categorias-destroy');
+Route::delete('categories', [CategoriesController::class, 'destroy'])->name('categorias-destroy');
